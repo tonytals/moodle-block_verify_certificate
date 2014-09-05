@@ -57,7 +57,7 @@ if (! $certificates) {
     foreach ($certificates as $certdata) {
         echo '<p>' . get_string('certificate', 'block_verify_certificate') . ' ' . $certdata->code . '</p>';
         echo '<p><b>' . get_string('to', 'block_verify_certificate') . ': </b>' . fullname($certdata) . '<br />';
-        $course = $DB->get_record('course', array('id'=> $certdata->course));
+        $course = $DB->get_record('course', array('id' => $certdata->course));
         if ($course) {
             echo '<p><b>' . get_string('course', 'block_verify_certificate') . ': </b>' . $course->fullname . '<br />';
         }

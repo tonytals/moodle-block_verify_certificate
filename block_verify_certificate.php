@@ -18,14 +18,14 @@
 
 class block_verify_certificate extends block_base {
 
-    function init() {
+    public function init() {
         $this->title = get_string('title', 'block_verify_certificate');
     }
 
-    function applicable_formats() {
+    public function applicable_formats() {
         return array('all' => true);
     }
-    function get_content() {
+    public function get_content() {
 
         if ($this->content !== null) {
             return $this->content;
@@ -43,7 +43,7 @@ class block_verify_certificate extends block_base {
 
         return $this->content;
     }
-    function instance_allow_config() {
+    public function instance_allow_config() {
         return false;
     }
 

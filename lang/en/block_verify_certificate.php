@@ -18,6 +18,7 @@ $string['title'] = 'Verify Certificates';
 $string['pluginname'] = 'Verify Certificates';
 $string['certificate'] = 'Verification for certificate code:';
 $string['verifycertificate'] = 'Verify Certificate';
+$string['verify_certificate:addinstance'] = 'Add a new Verify Certificates block';
 $string['notfound'] = 'The certificate code could not be validated.';
 $string['to'] = 'Awarded to';
 $string['course'] = 'Course';
