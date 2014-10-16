@@ -16,10 +16,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014090500;                 // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2013021200;                 // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2010112400;                 // Requires this Moodle version
 $plugin->component = 'block_verify_certificate'; // Full name of the plugin (used for diagnostics).
 
 $plugin->dependencies = array(
-    'mod_certificate' => 2014041801
+    'mod_certificate' => 2013021200
 );
