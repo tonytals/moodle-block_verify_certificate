@@ -18,6 +18,7 @@ $string['title'] = 'Проверить сертификат';
 $string['pluginname'] = 'Проверка сертификатов';
 $string['certificate'] = 'Проверка сертификата по коду:';
 $string['verifycertificate'] = 'Проверить сертификат';
+$string['verify_certificate:addinstance'] = 'Добавлять новый блок «Проверить сертификат»';
 $string['notfound'] = 'Код сертификата не найден в базе. Подлинность сертификата невозможно установить.';
 $string['to'] = 'Выдан';
 $string['course'] = 'Курс';
