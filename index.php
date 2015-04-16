@@ -20,10 +20,16 @@ global $DB;
 
 $id = required_param('certnumber', PARAM_ALPHANUM);   // Certificate code to verify.
 
+// Valor do radio button
+$porNome = required_param('por', PARAM_ALPHANUM);
+
+// Parametro da Query
+$codNome = ($porNome == "nome") ? 'CONCAT(u.firstname,u.lastname)' : 'ci.code' ;
+
 $PAGE->set_pagelayout('standard');
 $strverify = get_string('verifycertificate', 'block_verify_certificate');
 $PAGE->set_url('/blocks/verify_certificate/index.php', array('certnumber' => $id));
-$context = context_system::instance();
+$context = get_context_instance(CONTEXT_SYSTEM);
 $PAGE->set_context($context);
 
 // Print the header.
@@ -34,6 +40,9 @@ $PAGE->set_heading($strverify);
 $PAGE->requires->css('/blocks/verify_certificate/printstyle.css');
 echo $OUTPUT->header();
 $ufields = user_picture::fields('u');
+
+/*
+  ******\\\\ ANTIGA QUERY DE PESQUISA PELO CÓDIGO *******
 $sql = "SELECT ci.timecreated AS citimecreated,
      ci.code, ci.certificateid, ci.userid, $ufields, c.*
      FROM {certificate_issues} ci
@@ -42,6 +51,20 @@ $sql = "SELECT ci.timecreated AS citimecreated,
                            INNER JOIN {certificate} c
                            ON c.id = ci.certificateid
                            WHERE ci.code = ?";
+  
+  */
+  
+// Nova query
+$sql = "SELECT ci.timecreated AS citimecreated,
+     ci.code, ci.certificateid, ci.userid, $ufields, c.*
+     FROM {certificate_issues} ci
+                           INNER JOIN {user} u
+                           ON u.id = ci.userid
+                           INNER JOIN {certificate} c
+                           ON c.id = ci.certificateid
+                           WHERE $codNome LIKE '%$id%'";
+  
+  
 $certificates = $DB->get_records_sql($sql, array($id));
 
 if (! $certificates) {
@@ -55,11 +78,11 @@ if (! $certificates) {
     echo "<img src=\"print.gif\" height=\"16\" width=\"16\" border=\"0\"></img></a></div>";
     // Print Section.
     foreach ($certificates as $certdata) {
-        echo '<p>' . get_string('certificate', 'block_verify_certificate') . ' ' . $certdata->code . '</p>';
-        echo '<p><b>' . get_string('to', 'block_verify_certificate') . ': </b>' . fullname($certdata) . '<br />';
-        $course = $DB->get_record('course', array('id' => $certdata->course));
+      echo '<p style="border:solid thin black;padding:10px;"><b>' . get_string('certificate', 'block_verify_certificate') . '</b> ' . $certdata->code . '<br />';
+        echo '<b>' . get_string('to', 'block_verify_certificate') . ': </b>' . fullname($certdata) . '<br />';
+        $course = $DB->get_record('course', array('id'=> $certdata->course));
         if ($course) {
-            echo '<p><b>' . get_string('course', 'block_verify_certificate') . ': </b>' . $course->fullname . '<br />';
+            echo '<b>' . get_string('course', 'block_verify_certificate') . ': </b>' . $course->fullname . ' ( ' . $certdata->name . ' )<br />';
         }
         // Modify printdate so that date is always printed.
         $certdata->printdate = 1;
@@ -70,10 +93,10 @@ if (! $certificates) {
 
         $date = certificate_get_date($certdata, $certrecord, $course, $certdata->userid);
         if ($date) {
-            echo '<p><b>' . get_string('date', 'block_verify_certificate') . ': </b>' . $date . '<br /></p>';
+            echo '<b>' . get_string('date', 'block_verify_certificate') . ': </b>' . $date . '<br /></p>';
         }
         if ($course && $certdata->printgrade > 0) {
-            echo '<p><b>' . get_string('grade', 'block_verify_certificate') . ': </b>' . certificate_get_grade($certdata, $course, $certdata->userid) . '<br /></p>';
+            echo '<b>' . get_string('grade', 'block_verify_certificate') . ': </b>' . certificate_get_grade($certdata, $course, $certdata->userid) . '<br /></p>';
         }
     }
     echo $OUTPUT->box_end();
