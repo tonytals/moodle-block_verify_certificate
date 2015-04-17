@@ -38,21 +38,10 @@ class block_verify_certificate extends block_base {
         $this->content->text .= 'Por nome <input type="radio" name="por" id=name="porNome" value="nome" checked />'; // Para pesquisa por nome
         $this->content->text .= 'Por código <input type="radio" name="por" id=name="porCodigo" value="code"/>'; // Para pesquisa por codigo
         $this->content->text .= '<input type="text" name="certnumber" id=name="certnumber" size="10" value="" />';
-        $this->content->text .= '<input type="submit" value="Verificar"/></form>';
+        $this->content->text .= '<input type="submit" value="'.get_string('validate', 'certificate').'"/></form>';
         $this->content->text .= '<center>';
         $this->content->footer = '';
    
-        /**************** ANTIGO FORMULÁRIO ********************
-      
-        $this->content->text .= '<center><form class="loginform" name="cert" method="post" action="'. $url . '">';
-        $this->content->text .= '<input type="text" name="certnumber" id=name="certnumber" size="15" value="" />';
-        //$this->content->text .= '<input type="submit" value="'.get_string('validate', 'certificate').'"/></form>';
-        $this->content->text .= '<input type="submit" value="Verificar"/></form>';
-        $this->content->text .= '<center>';
-        $this->content->footer = '';
-      
-        */
-
         return $this->content;
     }
     function instance_allow_config() {
