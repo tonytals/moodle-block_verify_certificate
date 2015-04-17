@@ -41,19 +41,6 @@ $PAGE->requires->css('/blocks/verify_certificate/printstyle.css');
 echo $OUTPUT->header();
 $ufields = user_picture::fields('u');
 
-/*
-  ******\\\\ ANTIGA QUERY DE PESQUISA PELO CÓDIGO *******
-$sql = "SELECT ci.timecreated AS citimecreated,
-     ci.code, ci.certificateid, ci.userid, $ufields, c.*
-     FROM {certificate_issues} ci
-                           INNER JOIN {user} u
-                           ON u.id = ci.userid
-                           INNER JOIN {certificate} c
-                           ON c.id = ci.certificateid
-                           WHERE ci.code = ?";
-  
-  */
-  
 // Nova query
 $sql = "SELECT ci.timecreated AS citimecreated,
      ci.code, ci.certificateid, ci.userid, $ufields, c.*
